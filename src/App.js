@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
 
-function App() {
+const App = () => {
+  const [quotes, setQuotes] = useState('');
+
+  const getQuote = () => {
+    fetch ("https://type.fit/api/quotes")
+    .then(res => res.json())
+    .then(data => {
+      let randomNum = Math.floor(Math.random() * data.length);
+      setQuotes(data[randomNum]);
+    });
+
+    
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {quotes.text}
+      <button onClick={getQuote}>Get Quote</button>
     </div>
   );
 }
